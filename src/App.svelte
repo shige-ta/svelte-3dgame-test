@@ -1,85 +1,85 @@
+<head>
+</head>
+<body>
+  <div id="globalArea" style="width:800px;height:420px"></div>
+<script src="https://threejs.org/build/three.min.js"></script>    
+<script src="https://raw.githack.com/syt123450/giojs/master/build/gio.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</body>
 <script>
-  import {
-    Canvas,
-    Scene,
-    PerspectiveCamera,
-    DirectionalLight,
-    AmbientLight,
-    BoxBufferGeometry,
-    Mesh,
-    MeshStandardMaterial,
-    WebGLRenderer,
-  } from "svelthree";
-
-  let cubeGeometry = new BoxBufferGeometry(1, 1, 1);
-  let cubeMaterial = new MeshStandardMaterial();
-
-  let key;
-	let keyCode;	
-
-	let pos_list =[0.5, 0.6, 0];
-
-	const handleKeydown = (e) => {
-		key = e.key;
-		keyCode = e.keyCode;
-
-
-		if(key == "ArrowLeft")
-		{
-			pos_list[1] -= 0.1;
-		}
-		else if(key == "ArrowRight")
-		{
-			pos_list[1] += 0.1;
-		}
-		else if(key == "ArrowUp")
-		{
-			pos_list[0] -= 0.1;
-		}
-		else if(key == "ArrowDown")
-		{
-			pos_list[0] += 0.1;
-		}
-		console.log(key);
-		console.log(keyCode);
+ 
+window.onload = function(){
+var container = document.getElementById( "globalArea" );
+// container.addEventListener("mousemove", updateDisplay, false);
+let config = {
+	"control": {
+		"stats": false,
+		"disableUnmentioned": true,
+		"lightenMentioned": true,
+		"inOnly": false,
+		"outOnly": true,
+		"initCountry": "JP",
+		"halo": true,
+		"transparentBackground": false,
+		"autoRotation": false,
+		"rotationRatio": 0
+	},
+	"color": {
+		"surface": 1744048,
+		"selected": 2141154,
+		"in": 16777215,
+		"out": 2141154,
+		"halo": 2141154,
+		"background": 0
+	},
+	"brightness": {
+		"ocean": 0.5,
+		"mentioned": 0.5,
+		"related": 0.5
 	}
-  </script>
- <svelte:window on:keydown={handleKeydown}/>
+};
 
- <Canvas let:sti w={500} h={500}>
+let controller = new GIO.Controller( container, config );
+controller.init();
+let scene = controller.getScene();
+// var universeMesh = new THREE.Mesh();
 
-	<Scene {sti} let:scene id="scene1" props={{ background: 0xedf2f7 }}>
-  
-	  <PerspectiveCamera {scene} id="cam1" pos={[0, 0, 3]} lookAt={[0, 0, 0]} />
-	  <AmbientLight {scene} intensity={1.25} />
-	  <DirectionalLight {scene} pos={[3, 3, 3]} />
-  
-	  <Mesh
-		{scene}
-		geometry={cubeGeometry}
-		material={cubeMaterial}
-		mat={{ roughness: 0.5, metalness: 0.5, color: 0xff3e00 }}
-		pos={[0, 0, 0]}
-		rot={pos_list}
-		scale={[1, 1, 1]} />
-  
-	</Scene>
-  
-	<WebGLRenderer
-	  {sti}
-	  sceneId="scene1"
-	  camId="cam1"
-	  config={{ antialias: true, alpha: true }} />
-  
-  </Canvas>
-  {#if key == "ArrowLeft"}
-<p>👈</p>
-{:else if key == "ArrowRight"}
-<p>🤜</p>
-{:else if key == "ArrowUp"}
-<p>👆</p>
-{:else if key == "ArrowDown"}
-<p>👇</p>
-{:else}
-<p>None</p>
-{/if}
+// create a universe background which is an Three.js object
+// add universe to the scene
+// let world = scene.loca .getWorldPosition();
+
+//mesh = new THREE.Mesh(geo, mat);
+
+// var matrix =THREE.rotating.matrixWorld;
+// var abspos = THREE.matrix.multiplyVector3( Controller.center.clone() );
+// var screenPos = screenXY(abspos);
+
+
+// function screenXY(vec3){
+//   var projector = new THREE.Projector();
+//   var vector = projector.projectVector( vec3.clone(), Controller );
+// 	var result = new Object();
+// 	result.x = Math.round( vector.x * (window.innerWidth/2) ) + window.innerWidth/2;
+// 	result.y = Math.round( (0-vector.y) * (window.innerHeight/2) ) + window.innerHeight/2;
+// 	return result;
+// }
+
+// statsObject = controller.getStatsObject();
+
+// defined a callback function, as a demo, this function simply output selectedCountry, relatedCountries which are passed parameters into console
+// function callback ( selectedCountry, relatedCountries ) {
+
+//         console.log(selectedCountry);
+//         console.log(relatedCountries);
+
+// }
+
+
+function updateDisplay(){
+  console.log(scene.rotation.x);
+}
+
+
+};
+</script>
